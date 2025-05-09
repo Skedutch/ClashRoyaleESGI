@@ -1,0 +1,8 @@
+archer
+chevalier
+gargouille
+mini_pekka
+geant
+valkyrie
+bombardier
+bourreau
