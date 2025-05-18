@@ -36,6 +36,10 @@ static Tunite baseTroupes[] = {
 static const int nbTroupes = sizeof(baseTroupes) / sizeof(Tunite);
 
 void initialiserJoueur(Joueur *j, SDL_Renderer *renderer) {
+    strcpy(j->nom, "Quentin");
+    j->niveau = 4;
+    j->trophees = 542;
+
     for (int i = 0; i < nbTroupes; i++) {
         j->collection[i] = creerTroupe(baseTroupes[i].nom, 0, 0, renderer);
     }
