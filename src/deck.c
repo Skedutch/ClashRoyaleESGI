@@ -80,6 +80,8 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
     while (running) {
         while (SDL_PollEvent(&event)) {
             SDL_Point clic = { event.button.x, event.button.y };
+            SDL_Point clicCorrige = { clic.x, clic.y -50- scrollOffset };
+
             if (event.type == SDL_QUIT) {
                 sauvegarderDeck(joueur);
                 exit(0);
@@ -93,15 +95,15 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
             SDL_Rect rectJouer = {largeurFenetre / 2 + 20, footerY, 200, 80};
 
             if (event.type == SDL_MOUSEBUTTONDOWN) {
-                if (SDL_PointInRect(&clic, &rectArene)) boutonDeckPressed = 1;
-                if (SDL_PointInRect(&clic, &rectJouer)) boutonJouerPressed = 1;
+                if (SDL_PointInRect(&clicCorrige, &rectArene)) boutonDeckPressed = 1;
+                if (SDL_PointInRect(&clicCorrige, &rectJouer)) boutonJouerPressed = 1;
             }
             if (event.type == SDL_MOUSEBUTTONUP) {
-                if (SDL_PointInRect(&clic, &rectArene) && boutonDeckPressed) {
+                if (SDL_PointInRect(&clicCorrige, &rectArene) && boutonDeckPressed) {
                     sauvegarderDeck(joueur);
                     running = 0;
                 }
-                if (SDL_PointInRect(&clic, &rectJouer) && boutonJouerPressed) {
+                if (SDL_PointInRect(&clicCorrige, &rectJouer) && boutonJouerPressed) {
                     sauvegarderDeck(joueur);
                     afficherMenuJouer(renderer, font);
                 }
