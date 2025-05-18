@@ -77,6 +77,8 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
     TTF_Font *petitePolice = TTF_OpenFont("police/arial.ttf", 14);
     if (!petitePolice) petitePolice = font;
 
+    TTF_Font *fontDeckCollection = TTF_OpenFont("police/arial.ttf", 48);
+
     while (running) {
         while (SDL_PollEvent(&event)) {
             SDL_Point clic = { event.button.x, event.button.y };
@@ -137,36 +139,66 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
 
         SDL_RenderClear(renderer);
         afficherDamier(renderer);
-        SDL_Color blanc = {255, 255, 255, 255};
 
+        // Couleurs
+        SDL_Color texte_blanc = {255, 255, 255, 255};
+        SDL_Color texte_jaune = {204, 204, 0, 255};
+        SDL_Color texte_ombre = {255, 0, 127, 255};
 
-                // Texte "Deck"
-        SDL_Surface *surfaceDeck = TTF_RenderText_Solid(font, "Deck", blanc);
-        SDL_Texture *textureDeck = SDL_CreateTextureFromSurface(renderer, surfaceDeck);
-        SDL_Rect rectDeckTitre = {
-            (SCREEN_WIDTH - surfaceDeck->w) / 2,
+        // ---- DECK ----
+        SDL_Surface *surfaceShadowDeck = TTF_RenderText_Solid(fontDeckCollection, "Deck", texte_ombre);
+        SDL_Surface *surfaceMainDeck = TTF_RenderText_Solid(fontDeckCollection, "Deck", texte_jaune);
+
+        SDL_Texture *textureShadowDeck = SDL_CreateTextureFromSurface(renderer, surfaceShadowDeck);
+        SDL_Texture *textureMainDeck = SDL_CreateTextureFromSurface(renderer, surfaceMainDeck);
+
+        // Position
+        SDL_Rect rectDeck = {
+            (SCREEN_WIDTH - surfaceMainDeck->w) / 2,
             50 + scrollOffset,
-            surfaceDeck->w,
-            surfaceDeck->h
+            surfaceMainDeck->w,
+            surfaceMainDeck->h
         };
-        SDL_RenderCopy(renderer, textureDeck, NULL, &rectDeckTitre);
-        SDL_FreeSurface(surfaceDeck);
-        SDL_DestroyTexture(textureDeck);
+        SDL_Rect rectShadowDeck = rectDeck;
+        rectShadowDeck.x += 2;  // Décalage pour effet relief
+        rectShadowDeck.y += 2;
 
-        // Texte "Collection"
-        SDL_Surface *surfaceCollection = TTF_RenderText_Solid(font, "Collection", blanc);
-        SDL_Texture *textureCollection = SDL_CreateTextureFromSurface(renderer, surfaceCollection);
-        SDL_Rect rectCollectionTitre = {
-            (SCREEN_WIDTH - surfaceCollection->w) / 2,
-            debutYCollection - 40 + scrollOffset,
-            surfaceCollection->w,
-            surfaceCollection->h
+        SDL_RenderCopy(renderer, textureShadowDeck, NULL, &rectShadowDeck);
+        SDL_RenderCopy(renderer, textureMainDeck, NULL, &rectDeck);
+
+        SDL_FreeSurface(surfaceShadowDeck);
+        SDL_FreeSurface(surfaceMainDeck);
+        SDL_DestroyTexture(textureShadowDeck);
+        SDL_DestroyTexture(textureMainDeck);
+
+        // ---- COLLECTION ----
+        SDL_Surface *surfaceShadowCol = TTF_RenderText_Solid(fontDeckCollection, "Collection", texte_ombre);
+        SDL_Surface *surfaceMainCol = TTF_RenderText_Solid(fontDeckCollection, "Collection", texte_jaune);
+
+        SDL_Texture *textureShadowCol = SDL_CreateTextureFromSurface(renderer, surfaceShadowCol);
+        SDL_Texture *textureMainCol = SDL_CreateTextureFromSurface(renderer, surfaceMainCol);
+
+        SDL_Rect rectCol = {
+            (SCREEN_WIDTH - surfaceMainCol->w) / 2,
+            debutYCollection - 60 + scrollOffset,
+            surfaceMainCol->w,
+            surfaceMainCol->h
         };
-        SDL_RenderCopy(renderer, textureCollection, NULL, &rectCollectionTitre);
-        SDL_FreeSurface(surfaceCollection);
-        SDL_DestroyTexture(textureCollection);
+        SDL_Rect rectShadowCol = rectCol;
+        rectShadowCol.x += 2;
+        rectShadowCol.y += 2;
 
-        
+        SDL_RenderCopy(renderer, textureShadowCol, NULL, &rectShadowCol);
+        SDL_RenderCopy(renderer, textureMainCol, NULL, &rectCol);
+
+        SDL_FreeSurface(surfaceShadowCol);
+        SDL_FreeSurface(surfaceMainCol);
+        SDL_DestroyTexture(textureShadowCol);
+        SDL_DestroyTexture(textureMainCol);
+
+
+
+
         for (int i = 0; i < MAX_DECK; i++) {
             int col = i % nbCartesParLigneDeck;
             int row = i / nbCartesParLigneDeck;
@@ -213,20 +245,20 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
             int yStat = baseY + 90;
             char buf[64];
             snprintf(buf, sizeof(buf), "Nom : %s", joueur->collection[indexCarteSelectionnee]->nom);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
             snprintf(buf, sizeof(buf), "Vie : %d", joueur->collection[indexCarteSelectionnee]->pointsDeVie);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
             snprintf(buf, sizeof(buf), "Degats : %d", joueur->collection[indexCarteSelectionnee]->degats);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
             snprintf(buf, sizeof(buf), "Portee : %d", joueur->collection[indexCarteSelectionnee]->portee);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
             snprintf(buf, sizeof(buf), "Elixir : %d", joueur->collection[indexCarteSelectionnee]->coutEnElixir);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
             snprintf(buf, sizeof(buf), "Vitesse : %.1f", joueur->collection[indexCarteSelectionnee]->vitesseDeplacement);
-            afficherTexteStat(renderer, petitePolice, buf, blanc, baseX + 10, &yStat);
+            afficherTexteStat(renderer, petitePolice, buf, texte_blanc, baseX + 10, &yStat);
         }
 
-        int footerY = debutYCollection + (nbLignesCartes + 1) * 100 + 40;
+        int footerY = debutYCollection + (nbLignesCartes + 1) * 100 + 40 ;
         int limiteScroll = debutYCollection + (nbLignesCartes + 1) * 100 + 120 - SCREEN_HEIGHT;
         if (scrollOffset < -limiteScroll) scrollOffset = -limiteScroll;
 
@@ -239,6 +271,6 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
 
         SDL_RenderPresent(renderer);
     }
-
+    if (fontDeckCollection) TTF_CloseFont(fontDeckCollection);
     if (petitePolice != font) TTF_CloseFont(petitePolice);
 }
