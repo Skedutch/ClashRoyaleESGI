@@ -31,7 +31,13 @@ typedef struct {
     Tunite *collection[MAX_CARTES];
     Tunite *deck[MAX_DECK];
     int nbCartes;
+
+    // Infos de profil
+    char nom[50];
+    int niveau;
+    int trophees;
 } Joueur;
+
 
 Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *renderer);
 void afficherStatsUnite(Tunite *u);
