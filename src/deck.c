@@ -139,6 +139,34 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
         afficherDamier(renderer);
         SDL_Color blanc = {255, 255, 255, 255};
 
+
+                // Texte "Deck"
+        SDL_Surface *surfaceDeck = TTF_RenderText_Solid(font, "Deck", blanc);
+        SDL_Texture *textureDeck = SDL_CreateTextureFromSurface(renderer, surfaceDeck);
+        SDL_Rect rectDeckTitre = {
+            (SCREEN_WIDTH - surfaceDeck->w) / 2,
+            50 + scrollOffset,
+            surfaceDeck->w,
+            surfaceDeck->h
+        };
+        SDL_RenderCopy(renderer, textureDeck, NULL, &rectDeckTitre);
+        SDL_FreeSurface(surfaceDeck);
+        SDL_DestroyTexture(textureDeck);
+
+        // Texte "Collection"
+        SDL_Surface *surfaceCollection = TTF_RenderText_Solid(font, "Collection", blanc);
+        SDL_Texture *textureCollection = SDL_CreateTextureFromSurface(renderer, surfaceCollection);
+        SDL_Rect rectCollectionTitre = {
+            (SCREEN_WIDTH - surfaceCollection->w) / 2,
+            debutYCollection - 40 + scrollOffset,
+            surfaceCollection->w,
+            surfaceCollection->h
+        };
+        SDL_RenderCopy(renderer, textureCollection, NULL, &rectCollectionTitre);
+        SDL_FreeSurface(surfaceCollection);
+        SDL_DestroyTexture(textureCollection);
+
+        
         for (int i = 0; i < MAX_DECK; i++) {
             int col = i % nbCartesParLigneDeck;
             int row = i / nbCartesParLigneDeck;
