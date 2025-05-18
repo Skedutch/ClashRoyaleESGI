@@ -29,7 +29,11 @@ void afficherDamier(SDL_Renderer *renderer) {
     int tileSize = 25;
     for (int y = 0; y < SCREEN_HEIGHT; y += tileSize) {
         for (int x = 0; x < SCREEN_WIDTH; x += tileSize) {
-            SDL_SetRenderDrawColor(renderer, ((x / tileSize + y / tileSize) % 2) ? 0 : 13, 26, 74, 255);
+            if ((x / tileSize + y / tileSize) % 2 == 0) {
+                SDL_SetRenderDrawColor(renderer, 13, 26, 74, 255);  // Bleu foncé
+            } else {
+                SDL_SetRenderDrawColor(renderer, 33, 50, 110, 255); // Bleu plus clair
+            }
             SDL_Rect tile = { x, y, tileSize, tileSize };
             SDL_RenderFillRect(renderer, &tile);
         }
