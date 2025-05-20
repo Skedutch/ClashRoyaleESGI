@@ -22,8 +22,6 @@ extern void afficherTexteStat(SDL_Renderer *renderer, TTF_Font *font, const char
 void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur);
 
 
-// ... (en-têtes inchangés)
-
 void sauvegarderDeck(Joueur *joueur) {
     FILE *f = fopen("deck.txt", "w");
     if (!f) return;
@@ -39,7 +37,7 @@ void chargerDeck(Joueur *joueur, SDL_Renderer *renderer) {
     char nom[64];
     int i = 0;
     while (fgets(nom, sizeof(nom), f) && i < MAX_DECK) {
-        nom[strcspn(nom, "\n")] = 0; // supprimer le saut de ligne
+        nom[strcspn(nom, "\n")] = 0;
         for (int j = 0; j < joueur->nbCartes; j++) {
             if (strcmp(joueur->collection[j]->nom, nom) == 0) {
                 joueur->deck[i++] = joueur->collection[j];
@@ -51,7 +49,7 @@ void chargerDeck(Joueur *joueur, SDL_Renderer *renderer) {
 }
 
 void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
-    chargerDeck(joueur, renderer);  // charger le deck à l'ouverture
+    chargerDeck(joueur, renderer); 
 
     int running = 1;
     SDL_Event event;
