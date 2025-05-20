@@ -36,6 +36,7 @@ typedef struct {
     char nom[50];
     int niveau;
     int trophees;
+    char avatarPath[100];
 } Joueur;
 
 
