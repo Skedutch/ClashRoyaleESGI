@@ -90,7 +90,7 @@ Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *rende
             u->peutAttaquer = 1;
 
             char path[100];
-            snprintf(path, sizeof(path), "image/%s.png", nom);
+            snprintf(path, sizeof(path), "image/troupe/%s.png", nom);
             u->imageCarte = loadTexture(path, renderer);
             if (!u->imageCarte) {
                 printf("[AVERTISSEMENT] Image introuvable pour %s → carte ignorée\n", nom);
