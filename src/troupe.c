@@ -36,18 +36,21 @@ static Tunite baseTroupes[] = {
 static const int nbTroupes = sizeof(baseTroupes) / sizeof(Tunite);
 
 void initialiserJoueur(Joueur *j, SDL_Renderer *renderer) {
-    strcpy(j->nom, "Quentin");
-    j->niveau = 4;
-    j->trophees = 542;
+    // j->niveau = 1;
+    // j->trophees = 0;
 
     for (int i = 0; i < nbTroupes; i++) {
-        j->collection[i] = creerTroupe(baseTroupes[i].nom, 0, 0, renderer);
+        Tunite *t = creerTroupe(baseTroupes[i].nom, 0, 0, renderer);
+        if (t != NULL)
+            j->collection[i] = t;
     }
     j->nbCartes = nbTroupes;
 
     for (int k = 0; k < MAX_DECK; k++) {
         j->deck[k] = NULL; // deck vide au départ
     }
+    
+
 }
 
 int ajouterAuDeck(Joueur *j, Tunite *carte) {
@@ -89,6 +92,12 @@ Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *rende
             char path[100];
             snprintf(path, sizeof(path), "image/%s.png", nom);
             u->imageCarte = loadTexture(path, renderer);
+            if (!u->imageCarte) {
+                printf("[AVERTISSEMENT] Image introuvable pour %s → carte ignorée\n", nom);
+                free(u);
+                return NULL; // sécurité en cas d’image manquante
+            }
+
             if (!u->imageCarte) printf("[AVERTISSEMENT] Image introuvable pour %s\n", nom);
 
             return u;
