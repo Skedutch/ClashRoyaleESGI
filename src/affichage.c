@@ -4,7 +4,7 @@ SDL_Texture* loadTexture(const char *path, SDL_Renderer *renderer) {
     SDL_Surface *surface = IMG_Load(path);
     if (!surface) {
         printf("Erreur image %s: %s\n", path, IMG_GetError());
-        return NULL;  // PROTECTION
+        return NULL; 
     }
 
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -52,22 +52,20 @@ void afficherDamier(SDL_Renderer *renderer) {
 
 void dessinerTitre(SDL_Renderer *renderer, TTF_Font *font, const char *texte, int x, int y, float scale) {
     SDL_Color texte_jaune = {204, 204, 0, 255};
-    SDL_Color colorOmbre = {0, 0, 0, 150};       // Noir semi-transparent
+    SDL_Color colorOmbre = {0, 0, 0, 150};     
 
-    // 1. Rendu de l’ombre
     SDL_Surface *surfaceOmbre = TTF_RenderUTF8_Blended(font, texte, colorOmbre);
     SDL_Texture *textureOmbre = SDL_CreateTextureFromSurface(renderer, surfaceOmbre);
 
     SDL_Rect destOmbre;
     destOmbre.w = surfaceOmbre->w * scale;
     destOmbre.h = surfaceOmbre->h * scale;
-    destOmbre.x = x - destOmbre.w / 2 + 4;  // Décalage ombre (X + 4, Y + 4)
+    destOmbre.x = x - destOmbre.w / 2 + 4; 
     destOmbre.y = y - destOmbre.h / 2 + 4;
     SDL_FreeSurface(surfaceOmbre);
     SDL_RenderCopy(renderer, textureOmbre, NULL, &destOmbre);
     SDL_DestroyTexture(textureOmbre);
 
-    // 2. Rendu du texte principal
     SDL_Surface *surfaceTexte = TTF_RenderUTF8_Blended(font, texte, texte_jaune);
     SDL_Texture *textureTexte = SDL_CreateTextureFromSurface(renderer, surfaceTexte);
 
