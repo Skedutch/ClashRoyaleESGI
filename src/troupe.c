@@ -7,7 +7,6 @@
 #define MAX_CARTES 20
 #define MAX_DECK   8
 
-
 static Tunite baseTroupes[] = {
     {"chevalier", SOL, CIBLE_SOL, 1200, 150, 1, 1.0f, 1, 3, 0, 0, 0, NULL},
     {"archer", AIR, CIBLE_TOUS, 88, 120, 1, 1.0f, 3, 2, 0, 0, 0, NULL},
@@ -19,8 +18,6 @@ static Tunite baseTroupes[] = {
     {"bombardier", SOL, CIBLE_SOL, 200, 350, 1, 2.5f, 1, 2, 0, 0, 0, NULL},
     {"bebe_dragon", AIR, CIBLE_TOUS, 1100, 90, 1, 1.5f, 2, 4, 0, 0, 0, NULL},
     {"gobelin", SOL, CIBLE_SOL, 300, 75, 1, 2.0f, 1, 2, 0, 0, 0, NULL},
-
-    // 10 nouvelles troupes équilibrées
     {"barbare", SOL, CIBLE_SOL, 950, 140, 1, 1.1f, 1, 3, 0, 0, 0, NULL},
     {"mage_glace", SOL, CIBLE_TOUS, 700, 100, 1, 1.0f, 3, 4, 0, 0, 0, NULL},
     {"mega_minion", AIR, CIBLE_TOUS, 500, 200, 1, 2.0f, 1, 3, 0, 0, 0, NULL},
@@ -42,7 +39,7 @@ void initialiserJoueur(Joueur *j, SDL_Renderer *renderer) {
     j->nbCartes = nbTroupes;
 
     for (int k = 0; k < MAX_DECK; k++) {
-        j->deck[k] = NULL; // deck vide au départ
+        j->deck[k] = NULL;
     }
 }
 
@@ -105,3 +102,6 @@ void afficherStatsUnite(Tunite *u) {
     printf("Portée          : %d m\n", u->portee);
     printf("Elixir cout     : %d\n", u->coutEnElixir);
 }
+
+
+

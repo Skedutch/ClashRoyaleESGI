@@ -24,6 +24,7 @@ typedef struct {
 
 
 
+
 #define MAX_CARTES 20
 #define MAX_DECK 8
 

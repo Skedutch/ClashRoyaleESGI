@@ -2,6 +2,7 @@
 #include "troupe.h"
 #include "deck.h"
 #include "menu_jouer.h"
+#include "map.h"
 
 int main(int argc, char *argv[]) {
     (void)argc; (void)argv;
