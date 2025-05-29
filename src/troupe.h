@@ -32,7 +32,6 @@ typedef struct {
     Tunite *deck[MAX_DECK];
     int nbCartes;
 
-    // Infos de profil
     char nom[50];
     int niveau;
     int trophees;
