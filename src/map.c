@@ -229,7 +229,7 @@ void lancer_editeur_map(SDL_Renderer* renderer, TTF_Font* font) {
 
     int running = 1;
     SDL_Event event;
-    SDL_Window* window = SDL_GetWindowFromID(1); // ou passe-le en paramètre si tu veux être plus précis
+    SDL_Window* window = SDL_GetWindowFromID(1);
 
     while (running) {
         while (SDL_PollEvent(&event)) {
