@@ -7,7 +7,6 @@
 #define MAX_CARTES 20
 #define MAX_DECK   8
 
-
 static Tunite baseTroupes[] = {
     {"chevalier", SOL, CIBLE_SOL, 1200, 150, 1, 1.0f, 1, 3, 0, 0, 0, NULL},
     {"archer", AIR, CIBLE_TOUS, 88, 120, 1, 1.0f, 3, 2, 0, 0, 0, NULL},
@@ -19,8 +18,6 @@ static Tunite baseTroupes[] = {
     {"bombardier", SOL, CIBLE_SOL, 200, 350, 1, 2.5f, 1, 2, 0, 0, 0, NULL},
     {"bebe_dragon", AIR, CIBLE_TOUS, 1100, 90, 1, 1.5f, 2, 4, 0, 0, 0, NULL},
     {"gobelin", SOL, CIBLE_SOL, 300, 75, 1, 2.0f, 1, 2, 0, 0, 0, NULL},
-
-    // 10 nouvelles troupes équilibrées
     {"barbare", SOL, CIBLE_SOL, 950, 140, 1, 1.1f, 1, 3, 0, 0, 0, NULL},
     {"mage_glace", SOL, CIBLE_TOUS, 700, 100, 1, 1.0f, 3, 4, 0, 0, 0, NULL},
     {"mega_minion", AIR, CIBLE_TOUS, 500, 200, 1, 2.0f, 1, 3, 0, 0, 0, NULL},
@@ -36,21 +33,14 @@ static Tunite baseTroupes[] = {
 static const int nbTroupes = sizeof(baseTroupes) / sizeof(Tunite);
 
 void initialiserJoueur(Joueur *j, SDL_Renderer *renderer) {
-    // j->niveau = 1;
-    // j->trophees = 0;
-
     for (int i = 0; i < nbTroupes; i++) {
-        Tunite *t = creerTroupe(baseTroupes[i].nom, 0, 0, renderer);
-        if (t != NULL)
-            j->collection[i] = t;
+        j->collection[i] = creerTroupe(baseTroupes[i].nom, 0, 0, renderer);
     }
     j->nbCartes = nbTroupes;
 
     for (int k = 0; k < MAX_DECK; k++) {
-        j->deck[k] = NULL; // deck vide au départ
+        j->deck[k] = NULL;
     }
-    
-
 }
 
 int ajouterAuDeck(Joueur *j, Tunite *carte) {
@@ -90,14 +80,8 @@ Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *rende
             u->peutAttaquer = 1;
 
             char path[100];
-            snprintf(path, sizeof(path), "image/troupe/%s.png", nom);
+            snprintf(path, sizeof(path), "image/%s.png", nom);
             u->imageCarte = loadTexture(path, renderer);
-            if (!u->imageCarte) {
-                printf("[AVERTISSEMENT] Image introuvable pour %s → carte ignorée\n", nom);
-                free(u);
-                return NULL; // sécurité en cas d’image manquante
-            }
-
             if (!u->imageCarte) printf("[AVERTISSEMENT] Image introuvable pour %s\n", nom);
 
             return u;

@@ -1,5 +1,7 @@
 #include "affichage.h"
 #include "menu_jouer.h"
+#include "arene.h"
+#include "map.h"
 
 void afficherMenuJouer(SDL_Renderer *renderer, TTF_Font *font) {
     SDL_Surface *imgOnlineSurface = IMG_Load("image/Online_menu_jouer.png");
@@ -42,12 +44,26 @@ void afficherMenuJouer(SDL_Renderer *renderer, TTF_Font *font) {
             } else if (event.type == SDL_MOUSEBUTTONUP) {
                 if (pressedMenu && SDL_PointInRect(&clic, &boutonMenu)) running = 0;
                 else if (pressedRecherche && SDL_PointInRect(&clic, &boutonRecherche)) rechercheEnCours = 1;
-                else if (pressedFacile && SDL_PointInRect(&clic, &boutonFacile)) {} // Facile
-                else if (pressedNormale && SDL_PointInRect(&clic, &boutonNormal)) {} // Normale
-                else if (pressedDifficile && SDL_PointInRect(&clic, &boutonDifficile)) {} // Difficile
+                else if (pressedFacile && SDL_PointInRect(&clic, &boutonFacile)) {
+                    lancer_editeur_map(); // ← affichage de ta map
+                    lancerArene(renderer, font, 1); // ← lancement du niveau Facile
+                    running = 0;
+                }
+                else if (pressedNormale && SDL_PointInRect(&clic, &boutonNormal)) {
+                    lancer_editeur_map(); // ← affichage de ta map
+                    lancerArene(renderer, font, 2); // ← lancement du niveau Moyen
+                    running = 0;
+                }
+                else if (pressedDifficile && SDL_PointInRect(&clic, &boutonDifficile)) {
+                    lancer_editeur_map(); // ← affichage de ta map
+                    lancerArene(renderer, font, 3); // ← lancement du niveau Difficile
+                    running = 0;
+                }
+
                 pressedMenu = pressedRecherche = pressedFacile = pressedNormale = pressedDifficile = 0;
             }
         }
+
         afficherDamier(renderer);
         SDL_RenderDrawRect(renderer, &rectOnline);
         SDL_RenderDrawRect(renderer, &rectBot);
@@ -76,9 +92,11 @@ void afficherMenuJouer(SDL_Renderer *renderer, TTF_Font *font) {
             dessinerBouton(renderer, font, "Normale", boutonNormal.x, boutonNormal.y, pressedNormale, 150, 60, 20, 255, 204, 0);
             dessinerBouton(renderer, font, "Difficile", boutonDifficile.x, boutonDifficile.y, pressedDifficile, 150, 60, 20, 255, 204, 0);
         }
+
         dessinerBouton(renderer, font, "Menu", boutonMenu.x, boutonMenu.y, pressedMenu, 150, 50, 20, 255, 204, 0);
         SDL_RenderPresent(renderer);
     }
+
     SDL_DestroyTexture(imgOnlineTexture);
     SDL_DestroyTexture(imgBotTexture);
 }
