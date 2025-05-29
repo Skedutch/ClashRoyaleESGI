@@ -67,12 +67,11 @@ int main(int argc, char *argv[]) {
                 if (SDL_PointInRect(&clic, &rectJouer) && boutonJouerPressed) {
                     afficherMenuJouer(renderer, font);
                 }
-                SDL_Rect avatarRect = {20, 140, 40, 40}; // même que dans dessinerProfil()
+                SDL_Rect avatarRect = {20, 140, 40, 40};
 
                 if (SDL_PointInRect(&clic, &avatarRect)) {
                     choisirAvatar(renderer, font, joueur.avatarPath);
 
-                    // Recharger la nouvelle texture avatar si tu en gardes une globalement :
                     SDL_DestroyTexture(avatarTexture);
                     avatarTexture = IMG_LoadTexture(renderer, joueur.avatarPath);
                 }
