@@ -158,7 +158,7 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
             surfaceMainDeck->h
         };
         SDL_Rect rectShadowDeck = rectDeck;
-        rectShadowDeck.x += 2;  // Décalage pour effet relief
+        rectShadowDeck.x += 2;  
         rectShadowDeck.y += 2;
 
         SDL_RenderCopy(renderer, textureShadowDeck, NULL, &rectShadowDeck);
