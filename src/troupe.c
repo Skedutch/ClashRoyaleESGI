@@ -102,6 +102,3 @@ void afficherStatsUnite(Tunite *u) {
     printf("Portée          : %d m\n", u->portee);
     printf("Elixir cout     : %d\n", u->coutEnElixir);
 }
-
-
-

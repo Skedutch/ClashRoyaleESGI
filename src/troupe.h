@@ -24,7 +24,6 @@ typedef struct {
 
 
 
-
 #define MAX_CARTES 20
 #define MAX_DECK 8
 
@@ -32,7 +31,14 @@ typedef struct {
     Tunite *collection[MAX_CARTES];
     Tunite *deck[MAX_DECK];
     int nbCartes;
+
+    // Infos de profil
+    char nom[50];
+    int niveau;
+    int trophees;
+    char avatarPath[100];
 } Joueur;
+
 
 Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *renderer);
 void afficherStatsUnite(Tunite *u);
