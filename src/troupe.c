@@ -19,8 +19,6 @@ static Tunite baseTroupes[] = {
     {"bombardier", SOL, CIBLE_SOL, 200, 350, 1, 2.5f, 1, 2, 0, 0, 0, NULL},
     {"bebe_dragon", AIR, CIBLE_TOUS, 1100, 90, 1, 1.5f, 2, 4, 0, 0, 0, NULL},
     {"gobelin", SOL, CIBLE_SOL, 300, 75, 1, 2.0f, 1, 2, 0, 0, 0, NULL},
-
-    // 10 nouvelles troupes équilibrées
     {"barbare", SOL, CIBLE_SOL, 950, 140, 1, 1.1f, 1, 3, 0, 0, 0, NULL},
     {"mage_glace", SOL, CIBLE_TOUS, 700, 100, 1, 1.0f, 3, 4, 0, 0, 0, NULL},
     {"mega_minion", AIR, CIBLE_TOUS, 500, 200, 1, 2.0f, 1, 3, 0, 0, 0, NULL},
@@ -47,7 +45,7 @@ void initialiserJoueur(Joueur *j, SDL_Renderer *renderer) {
     j->nbCartes = nbTroupes;
 
     for (int k = 0; k < MAX_DECK; k++) {
-        j->deck[k] = NULL; // deck vide au départ
+        j->deck[k] = NULL;
     }
     
 
@@ -95,7 +93,7 @@ Tunite *creerTroupe(const char *nom, float posX, float posY, SDL_Renderer *rende
             if (!u->imageCarte) {
                 printf("[AVERTISSEMENT] Image introuvable pour %s → carte ignorée\n", nom);
                 free(u);
-                return NULL; // sécurité en cas d’image manquante
+                return NULL;
             }
 
             if (!u->imageCarte) printf("[AVERTISSEMENT] Image introuvable pour %s\n", nom);
