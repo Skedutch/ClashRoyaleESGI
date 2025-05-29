@@ -143,7 +143,7 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
         SDL_Color texte_jaune = {204, 204, 0, 255};
         SDL_Color texte_ombre = {255, 0, 127, 255};
 
-        // ---- DECK ----
+        // DECK 
         SDL_Surface *surfaceShadowDeck = TTF_RenderText_Solid(fontDeckCollection, "Deck", texte_ombre);
         SDL_Surface *surfaceMainDeck = TTF_RenderText_Solid(fontDeckCollection, "Deck", texte_jaune);
 
@@ -169,7 +169,7 @@ void afficherDeck(SDL_Renderer *renderer, TTF_Font *font, Joueur *joueur) {
         SDL_DestroyTexture(textureShadowDeck);
         SDL_DestroyTexture(textureMainDeck);
 
-        // ---- COLLECTION ----
+        //  COLLECTION 
         SDL_Surface *surfaceShadowCol = TTF_RenderText_Solid(fontDeckCollection, "Collection", texte_ombre);
         SDL_Surface *surfaceMainCol = TTF_RenderText_Solid(fontDeckCollection, "Collection", texte_jaune);
 
