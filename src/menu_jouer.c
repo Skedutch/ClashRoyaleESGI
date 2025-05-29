@@ -45,18 +45,18 @@ void afficherMenuJouer(SDL_Renderer *renderer, TTF_Font *font) {
                 if (pressedMenu && SDL_PointInRect(&clic, &boutonMenu)) running = 0;
                 else if (pressedRecherche && SDL_PointInRect(&clic, &boutonRecherche)) rechercheEnCours = 1;
                 else if (pressedFacile && SDL_PointInRect(&clic, &boutonFacile)) {
-                    lancer_editeur_map(renderer, font); // ← affichage de ta map
-                    lancerArene(renderer, font, 1); // ← lancement du niveau Facile
+                    lancer_editeur_map(renderer, font); 
+                    lancerArene(renderer, font, 1);
                     running = 0;
                 }
                 else if (pressedNormale && SDL_PointInRect(&clic, &boutonNormal)) {
-                    lancer_editeur_map(renderer, font); // ← affichage de ta map
-                    lancerArene(renderer, font, 2); // ← lancement du niveau Moyen
+                    lancer_editeur_map(renderer, font); 
+                    lancerArene(renderer, font, 2);
                     running = 0;
                 }
                 else if (pressedDifficile && SDL_PointInRect(&clic, &boutonDifficile)) {
-                    lancer_editeur_map(renderer, font); // ← affichage de ta map
-                    lancerArene(renderer, font, 3); // ← lancement du niveau Difficile
+                    lancer_editeur_map(renderer, font); 
+                    lancerArene(renderer, font, 3); 
                     running = 0;
                 }
 
