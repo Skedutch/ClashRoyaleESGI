@@ -198,14 +198,9 @@ void afficherMenuPause(SDL_Surface* screen, SDL_Window* window, TTF_Font* font, 
     }
 }
 
-void lancer_editeur_map(void) {
-    SDL_Init(SDL_INIT_VIDEO);
-    TTF_Init();
-    SDL_Window* window = SDL_CreateWindow("Map Editeur", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                          SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Surface* screen = SDL_GetWindowSurface(window);
-    TTF_Font* font = TTF_OpenFont("police/arial.ttf", 20);
+void lancer_editeur_map(SDL_Renderer* renderer, TTF_Font* font) {
+    SDL_Surface* screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32,
+                                                0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000);
 
     SDL_Surface* TabSpriteMap[5] = {
         SDL_LoadBMP("image/map/Eau/Eau.bmp"),
@@ -218,7 +213,6 @@ void lancer_editeur_map(void) {
     for (int i = 0; i < 4; i++) {
         if (!TabSpriteMap[i]) {
             fprintf(stderr, "Erreur chargement sprite map %d: %s\n", i, SDL_GetError());
-            SDL_Quit();
             exit(1);
         }
     }
@@ -227,22 +221,31 @@ void lancer_editeur_map(void) {
     prepareAllSpriteJeu(LARGEURJEU, HAUTEURJEU, TabSpriteMap, screen);
     dessinerMurs(screen);
     afficherTours(screen);
-    SDL_UpdateWindowSurface(window);
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, screen);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
 
     int running = 1;
     SDL_Event event;
+    SDL_Window* window = SDL_GetWindowFromID(1); // ou passe-le en paramètre si tu veux être plus précis
+
     while (running) {
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) running = 0;
-            else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+            if (event.type == SDL_QUIT) {
+                running = 0;
+            } else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                 afficherMenuPause(screen, window, font, renderer);
+            }
         }
         SDL_Delay(16);
     }
 
-    for (int i = 0; i < 5; i++) if (TabSpriteMap[i]) SDL_FreeSurface(TabSpriteMap[i]);
-    TTF_CloseFont(font);
-    SDL_DestroyWindow(window);
-    TTF_Quit();
-    SDL_Quit();
+    for (int i = 0; i < 5; i++) {
+        if (TabSpriteMap[i]) SDL_FreeSurface(TabSpriteMap[i]);
+    }
+
+    SDL_FreeSurface(screen);
+    SDL_DestroyTexture(texture);
 }

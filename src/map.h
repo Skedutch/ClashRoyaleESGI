@@ -1,6 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
-void lancer_editeur_map(void);
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
-#endif
+void lancer_editeur_map(SDL_Renderer *renderer, TTF_Font *font);
+
+#endif 
